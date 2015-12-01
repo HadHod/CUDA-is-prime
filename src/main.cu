@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
     cudaMalloc((void**) &dev_result, sizeof(bool));
     cudaMalloc((void**) &dev_number, sizeof(int));
 
-    cudaMemcpy(dev_number, (const void *) number, sizeof(int), cudaMemcpyHostToDevice);
+    cudaMemcpy(dev_number, &number, sizeof(int), cudaMemcpyHostToDevice);
 
     dim3 dimGrid(1, 1, 1);
     dim3 dimBlock(1, 1, 1);
@@ -29,6 +29,8 @@ int main(int argc, char* argv[]) {
     cudaDeviceSynchronize();
 
     cudaMemcpy(result, dev_result, sizeof(bool), cudaMemcpyDeviceToHost);
+
+    cout << result;
 
     cudaFree(dev_result);
     cudaFree(dev_number);
